@@ -10,7 +10,7 @@ fun main() {
 }
 
 
-fun cycleDetection(edges: Array<IntArray>, n: Int, m: Int): String {
+fun cycleDetectionDFS(edges: Array<IntArray>, n: Int, m: Int): String {
     val adj = createAdjList(n, edges)
     val parent: MutableMap<Int, Int> = HashMap()
     val visited = BooleanArray(n + 1)
@@ -46,31 +46,6 @@ private fun isCyclicDFS(
     return false
 }
 
-private fun isCyclicBFS(
-    adj: ArrayList<ArrayList<Int>>,
-    source: Int,
-    visited: BooleanArray
-): Boolean {
-    val parent: MutableMap<Int, Int> = HashMap()
-    parent[source] = -1
-    visited[source] = true
-    val queue: Queue<Int> = LinkedList()
-    queue.add(source)
-    while (!queue.isEmpty()) {
-        val front = queue.poll()
-        //System.out.println("front -> " + front);
-        for (neighbour in adj[front]) {
-            if (visited[neighbour] && neighbour != parent[front]) {
-                return true
-            } else if (!visited[neighbour]) {
-                queue.add(neighbour)
-                visited[neighbour] = true
-                parent[neighbour] = front
-            }
-        }
-    }
-    return false
-}
 
 private fun createAdjList(
     n: Int,

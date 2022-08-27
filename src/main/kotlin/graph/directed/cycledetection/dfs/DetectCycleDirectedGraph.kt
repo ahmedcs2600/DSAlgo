@@ -1,4 +1,4 @@
-package graph
+package graph.directed.cycledetection.dfs
 
 import java.util.*
 
@@ -9,11 +9,11 @@ fun main() {
 
 }
 
-fun detectCycleInDirectedGraph(n: Int, edges: ArrayList<ArrayList<Int>>): Boolean {
+fun detectCycleInDirectedGraphDFS(n: Int, edges: ArrayList<ArrayList<Int>>): Boolean {
     val adj: ArrayList<ArrayList<Int>> = createAdj(n, edges)
     val visited = IntArray(n + 1)
     for (i in 1..n) {
-        if (visited[i] == 0 && bfs(n, adj, i, visited)) {
+        if (visited[i] == 0 && dfs(n, adj, i, visited)) {
             return true
         }
     }
@@ -37,30 +37,9 @@ private fun createAdj(
     return adj
 }
 
-private fun bfs(
-    n: Int,
-    adj: ArrayList<ArrayList<Int>>,
-    vertex: Int,
-    visited: IntArray
-): Boolean {
-    val queue: Queue<Int> = LinkedList()
-    queue.add(vertex)
-    visited[vertex] = 2
-    while (!queue.isEmpty()) {
-        val front = queue.poll()
-        for (neighbour in adj[front]) {
-            if (visited[neighbour] == 1) continue
-            if (visited[neighbour] == 2) {
-                return true
-            }
-            visited[neighbour] = 2
-            queue.add(neighbour)
-        }
-        visited[front] = 1
-    }
-    return false
-}
 
+
+//using dfs
 private fun dfs(
     n: Int,
     adj: ArrayList<ArrayList<Int>>,
